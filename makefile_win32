@@ -1,0 +1,16 @@
+zjhttp : zjHttp.o
+		gcc -o zjhttp zjHttp.o -Wall -lws2_32
+
+zjHttp.o : zjhttp.h
+		gcc -c zjHttp.c -Wall  -D ENABLE_FEATURE_WIN32=1
+
+.PHONY : clean
+clean :
+		rm zjhttp.exe zjHttp.o
+
+
+
+
+
+
+
