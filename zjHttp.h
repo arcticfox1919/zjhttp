@@ -18,9 +18,9 @@
 
 typedef SOCKET Client;
 typedef struct cgi_env {
-	char buf[CGI_ENVIRONMENT_SIZE];       
-	int len;                                
-	int st;                               
+    char buf[CGI_ENVIRONMENT_SIZE];       
+    int len;                                
+    int st;                               
 } CGI_ENV;
 
 #else
