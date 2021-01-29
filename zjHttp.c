@@ -147,13 +147,14 @@ void *accept_request(void* args){
     struct stat st;
     int cgi = 0;                 
     char *query_string = NULL;
+	char *saveptr = NULL;
 
     memset(buf, 0, sizeof(buf));
     /* 获取一行HTTP报文数据 */
     if ((numchars = get_line(client, buf, sizeof(buf))) == 0) return NULL;
 
     /* 获取Http请求行字段，格式为<method> <request-URL> <version> 每个字段以空白字符相连 */
-    method = strtok(buf, " ");                                /* 从请求行中分割出method字段 */
+    method = strtok_r(buf, " ",&saveptr);                                /* 从请求行中分割出method字段 */
 
     /* 本Demo仅实现GET请求和POST请求 */
     if (StrCaseCmp(method, "GET") && StrCaseCmp(method, "POST")){
@@ -164,7 +165,7 @@ void *accept_request(void* args){
     /* 如果请求方法为POST，cgi标志位置1,开启cgi解析 */
     if (StrCaseCmp(method, "POST") == 0) cgi = 1;
 
-    url = strtok(NULL, " ");              /* 从请求行中分割出request-URL字段 */
+    url = strtok_r(NULL, " ",&saveptr);              /* 从请求行中分割出request-URL字段 */
     
     if (StrCaseCmp(method, "GET") == 0){  /* GET请求，url可能带有"?",有查询参数 */
         query_string = url;
